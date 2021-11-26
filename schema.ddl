@@ -3,12 +3,11 @@ CREATE TABLE Product (
   pName VARCHAR(50),
   pType VARCHAR(50),
   pPrice NUMERIC,
-  pExpDate INT
+  pExpPeriod INT
 );
 
 CREATE TABLE Storage (
   idStorage INT PRIMARY KEY,
-  sType VARCHAR(50),
   sCount INT,
   sDate INT,
   idProd INT
@@ -24,5 +23,6 @@ CREATE TABLE Dish (
 CREATE TABLE Consists (
     idDish INT,
     idProduct INT,
+    cCount INT,
     PRIMARY KEY (idDish, idProduct)
 );
