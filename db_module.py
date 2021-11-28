@@ -74,21 +74,27 @@ class DbModule:
             self.cursor.execute(
                 f"DELETE FROM Consists  WHERE idDish={id};")
 
-    def get_all_consist(self, id):
-        """ Получаем перечень всех рецептов """
+    def get_consist(self, id):
+        """ Получаем  рецептa """
         with self.connection:
-            return self.cursor.execute(f'SELECT * FROM Consists WHERE idDish={id}').fetchall()
+            return self.cursor.execute(f'SELECT idProduct, cCount FROM Consists WHERE idDish={id}').fetchall()
 
     def get_storage_max_id(self):
-        """ Получение максимльного id """
+        """ Получение максимльного id склада"""
         with self.connection:
             result = self.cursor.execute('SELECT max(idStorage) FROM Storage').fetchall()  # list[tuple]
             return result[0][0] if result[0][0] is not None else 0
 
     def get_product_max_id(self):
-        """ Получение максимльного id """
+        """ Получение максимльного id продукта"""
         with self.connection:
             result = self.cursor.execute('SELECT max(idProduct) FROM Product').fetchall()  # list[tuple]
+            return result[0][0] if result[0][0] is not None else 0
+
+    def get_dish_max_id(self):
+        """ Получение максимльного id блюда"""
+        with self.connection:
+            result = self.cursor.execute('SELECT max(idDish) FROM Dish').fetchall()  # list[tuple]
             return result[0][0] if result[0][0] is not None else 0
 
     def get_all_product_id(self):
