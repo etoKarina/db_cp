@@ -38,10 +38,17 @@ class DbModule:
             self.cursor.execute(
                 f"DELETE FROM Storage  WHERE idStorage in ({','.join(str(id) for id in ids)});")
 
-    def get_all_storage(self):
-        """ Получаем перечень всего на складе """
+    def update_storage(self, id, new_count):
+        """Удаление продуктов со склада """
         with self.connection:
-            return self.cursor.execute('SELECT * FROM Storage').fetchall()
+            self.cursor.execute(
+                f"UPDATE Storage SET sCount = {new_count} WHERE idStorage = {id};")
+
+    def get_all_storage(self, id=None):
+        """ Получаем перечень всего на складе """
+        condition = "1=1" if id is None else f"idProd={id}"
+        with self.connection:
+            return self.cursor.execute(f'SELECT * FROM Storage WHERE {condition}').fetchall()
 
     def new_dish(self, id, name, price, description):
         """Поставки на склад """
@@ -114,3 +121,9 @@ left join Product p
 where s.sDate + p.pExpPeriod*24*60*60 < {timestamp}
             """).fetchall()  # list[tuple]
             return [row[0] for row in result]  # [[1],[2],[3]]
+
+    def get_product_count(self, product_id):
+        with self.connection:
+            result = self.cursor.execute(
+                f'select sum(sCount) from Storage s where idProd = {product_id}').fetchall()
+            return result[0][0] if result[0][0] is not None else 0
