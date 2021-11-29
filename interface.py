@@ -19,8 +19,14 @@ class App(tk.Frame):
         self.somelabel.pack()
 
     def print_contents(self, event):
-        result = self.restoraunt.db.get_all_products()
-        self.somelabel['text'] = result
+        products = self.restoraunt.db.get_all_products()
+        height = len(products)
+        width = 5
+
+        for i in range(height):  # Rows
+            for j in range(width):  # Columns
+                b = tk.Label(self, text=products[i][j])
+                b.grid(row=i, column=j)
 
 
 root = tk.Tk()
