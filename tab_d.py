@@ -17,6 +17,7 @@ class Example(tk.Frame):
         #
         # self.pack()
 
+
         self.button2 = tk.Button(self, text='Список ингредиентов', command=self.on_click3)
         self.button2.pack()
         self.table = tk.Frame(self)
