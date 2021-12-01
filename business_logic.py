@@ -22,7 +22,14 @@ class Restoraunt:
         self.db.new_product(max_id + 1, name, type, price, exp_period)
 
     def delete_product(self, id):
-        self.db.delete_product(id)
+        product_count = self.db.get_product_count(id)
+        dishes_for_product = self.db.get_dishes_for_product(id)
+        if not product_count:
+            print(f'Cannot delete product {id} that still present in storage')
+        elif dishes_for_product:
+            print(f'There are dishes {dishes_for_product} that use that product! delete them first')
+        else:
+            self.db.delete_product(id)
 
     def remove_stall_products(self, date: datetime.datetime):
         timestamp = calendar.timegm(date.utctimetuple())
@@ -89,5 +96,5 @@ class Restoraunt:
                 self.db.delete_storage([current_storage_id])
                 count -= current_count
 
-    def menu_showtime(self): # TODO: отфилтровать dish для которых check_dish False
+    def menu_showtime(self):  # TODO: отфилтровать dish для которых check_dish False
         print(self.db.get_all_dish())

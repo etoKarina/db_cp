@@ -86,6 +86,12 @@ class DbModule:
         with self.connection:
             return self.cursor.execute(f'SELECT idProduct, cCount FROM Consists WHERE idDish={id}').fetchall()
 
+    def get_dishes_for_product(self, id):
+        """ Получаем все блюда, из которых состоит продукт """
+        with self.connection:
+            result = self.cursor.execute(f'SELECT idDish FROM Consists WHERE idProduct={id}').fetchall()
+            return [row[0] for row in result]
+
     def get_storage_max_id(self):
         """ Получение максимльного id склада"""
         with self.connection:
@@ -123,6 +129,7 @@ where s.sDate + p.pExpPeriod*24*60*60 < {timestamp}
             return [row[0] for row in result]  # [[1],[2],[3]]
 
     def get_product_count(self, product_id):
+        """ Получение кол-ва продуктов на складе"""
         with self.connection:
             result = self.cursor.execute(
                 f'select sum(sCount) from Storage s where idProd = {product_id}').fetchall()
