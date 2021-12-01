@@ -62,7 +62,7 @@ class Restoraunt:
             for product_id, count in product_ids_counts:
                 product_count[product_id] += count
 
-        for product_id, count in product_count:
+        for product_id, count in product_count.items():
             self.remove_product_from_storage(product_id, count)
 
     def check_dish(self, dish_id):
