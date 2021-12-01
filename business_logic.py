@@ -98,3 +98,6 @@ class Restoraunt:
 
     def menu_showtime(self):  # TODO: отфилтровать dish для которых check_dish False
         print(self.db.get_all_dish())
+
+    def _throw_error(self):  # нужно только для проверки отлова интерфейсом ошибок
+        raise Exception('hahahahaha')
