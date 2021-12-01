@@ -4,19 +4,18 @@ from business_logic import Restoraunt
 
 class Example(tk.Frame):
 
-    def __init__(self, parent):
+    def __init__(self, parent, restoraunt):
         super().__init__(parent)
 
         self.parent = parent
+        self.restoraunt = restoraunt
         self.init_ui()
-        self.restoraunt = Restoraunt()
 
     def init_ui(self):
         # self.button = tk.Button(self, text='Список блюд', command=self.on_click)
         # self.button.pack()
         #
         # self.pack()
-
 
         self.button2 = tk.Button(self, text='Список ингредиентов', command=self.on_click3)
         self.button2.pack()

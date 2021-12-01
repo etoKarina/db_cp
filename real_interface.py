@@ -9,10 +9,12 @@ from tab_d import Example as TabD
 
 
 class MainWindow(tk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, restoraunt):
         super().__init__(parent)
 
         self.parent = parent
+        self.restoraunt = restoraunt
+
         self.parent.title('Gourmets')
 
         self.init_ui()
@@ -23,11 +25,10 @@ class MainWindow(tk.Frame):
 
         self.notebook = ttk.Notebook(self, width=1000, height=700)
 
-        a_tab = TabA(self.notebook)
-        b_tab = TabB(self.notebook)
-        c_tab = TabC(self.notebook)
-        d_tab = TabD(self.notebook)
-
+        a_tab = TabA(self.notebook, self.restoraunt)
+        b_tab = TabB(self.notebook, self.restoraunt)
+        c_tab = TabC(self.notebook, self.restoraunt)
+        d_tab = TabD(self.notebook, self.restoraunt)
 
         self.notebook.add(a_tab, text="Посетителям")
         self.notebook.add(b_tab, text="Поставщикам")
@@ -42,6 +43,7 @@ class MainWindow(tk.Frame):
 if __name__ == '__main__':
     root = Tk()
     root.title('Gourmets')
-    ex = MainWindow(root)
+    restoraunt = Restoraunt()
+    ex = MainWindow(root, restoraunt)
     root.geometry("800x600")
     root.mainloop()
