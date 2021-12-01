@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, RIGHT, LEFT, TOP
 
 
 class Example(tk.Frame):
@@ -11,21 +11,16 @@ class Example(tk.Frame):
         self.init_ui()
 
     def init_ui(self):
-        self.pack(fill=tk.BOTH, expand=1)
+        self.button_frame = tk.Frame(self)
+        self.button_frame.pack(side=LEFT)
 
-        acts = ['Scarlett Johansson', 'Rachel Weiss', 'Natalie Portman', 'Jessica Alba']
+        self.submenu_frame = tk.Frame(self)
+        self.submenu_frame.pack(side=TOP)
 
-        self.lb = tk.Listbox(self)
-        for i in acts:
-            self.lb.insert(tk.END, i)
-            self.lb.bind("<<ListboxSelect>>", self.on_select)
-            self.lb.pack(pady=15)
+        self.button_error = tk.Button(self.button_frame, text='Сделать заказ', command=self.make_order)
+        self.button_error.pack()
 
-        self.var = tk.StringVar()
-        self.label = tk.Label(self, text=0, textvariable=self.var)
-        self.label.pack()
-
-        self.button_error = tk.Button(self, text='iamerror', command=self.summon_error)
+        self.button_error = tk.Button(self.button_frame, text='Актуальное меню', command=self.actual_menu)
         self.button_error.pack()
 
         self.pack()
@@ -35,6 +30,20 @@ class Example(tk.Frame):
             self.restoraunt._throw_error()
         except Exception as e:
             messagebox.showerror('ERROR', e)
+
+    def clear_submenu(self):
+        for widget in self.submenu_frame.winfo_children():
+            widget.destroy()
+
+    def make_order(self):  # TODO: сделать декоратором для функций, кидающих ошибки
+        self.clear_submenu()
+        self.submenu_frame.lb = tk.Label(self.submenu_frame, text='makeorder')
+        self.submenu_frame.lb.pack()
+
+    def actual_menu(self):  # TODO: сделать декоратором для функций, кидающих ошибки
+        self.clear_submenu()
+        self.submenu_frame.lb = tk.Label(self.submenu_frame, text='actualmenu')
+        self.submenu_frame.lb.pack(side=TOP)
 
     def on_select(self, val):
         sender = val.widget

@@ -1,5 +1,4 @@
 import tkinter as tk
-from business_logic import Restoraunt
 
 
 class Example(tk.Frame):
