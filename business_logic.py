@@ -96,8 +96,9 @@ class Restoraunt:
                 self.db.delete_storage([current_storage_id])
                 count -= current_count
 
-    def menu_showtime(self):  # TODO: отфилтровать dish для которых check_dish False
-        print(self.db.get_all_dish())
+    def get_actual_menu(self):
+        all_dishes = self.db.get_all_dish()
+        return [dish for dish in all_dishes if self.check_dish(dish[0])]
 
     def _throw_error(self):  # нужно только для проверки отлова интерфейсом ошибок
         raise Exception('hahahahaha')

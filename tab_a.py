@@ -35,15 +35,21 @@ class Example(tk.Frame):
         for widget in self.submenu_frame.winfo_children():
             widget.destroy()
 
-    def make_order(self):  # TODO: сделать декоратором для функций, кидающих ошибки
+    def make_order(self):
         self.clear_submenu()
         self.submenu_frame.lb = tk.Label(self.submenu_frame, text='makeorder')
         self.submenu_frame.lb.pack()
 
-    def actual_menu(self):  # TODO: сделать декоратором для функций, кидающих ошибки
+    def actual_menu(self):
         self.clear_submenu()
-        self.submenu_frame.lb = tk.Label(self.submenu_frame, text='actualmenu')
-        self.submenu_frame.lb.pack(side=TOP)
+        dishes = self.restoraunt.get_actual_menu()
+        height = len(dishes)
+        width = len(dishes[0])
+
+        for i in range(height):  # Rows
+            for j in range(width):  # Columns
+                b = tk.Label(self.submenu_frame, text=dishes[i][j])
+                b.grid(row=i, column=j)
 
     def on_select(self, val):
         sender = val.widget
