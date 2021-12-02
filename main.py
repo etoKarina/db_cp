@@ -23,8 +23,8 @@ if __name__ == "__main__":
     #
     # r.add_dish('перог',1488,'desc',[(6,3)])
 
-    r.recieve_product(6, 3, datetime.datetime(2021, 11, 27, 0, 0))
-    r.recieve_product(6, 5, datetime.datetime(2021, 11, 28, 0, 0))
+    r.recieve_product(6, 4, datetime.datetime(2021, 11, 27, 0, 0))
+    # r.recieve_product(6, 5, datetime.datetime(2021, 11, 28, 0, 0))
 
     # r.add_dish('не перог', 1488, 'ass', [(2, 3)])
 

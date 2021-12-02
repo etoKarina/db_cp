@@ -2,6 +2,19 @@ import tkinter as tk
 from tkinter import messagebox, RIGHT, LEFT, TOP, IntVar
 
 
+def propagate_error_to_ui(fun):
+    def wrapped(*args, **kwargs):
+
+        try:
+            res = fun(*args, **kwargs)
+            return res
+        except Exception as e:
+            messagebox.showerror('ERROR', e)
+            raise e
+
+    return wrapped
+
+
 class Example(tk.Frame):
     def __init__(self, parent, restoraunt):
         super().__init__(parent)
@@ -51,6 +64,7 @@ class Example(tk.Frame):
                 tk.Checkbutton(self.submenu_frame, variable=self.order_ticks[-1]).grid(row=i + 1, column=2)
             tk.Button(self.submenu_frame, text='Заказать!', command=self.make_order).grid(row=height + 1, column=1)
         else:
+            self.clear_submenu()
             tk.Label(self.submenu_frame, text='нечего заказать!').grid(row=height + 1, column=1)
 
     def make_order_submenu(self):
@@ -65,7 +79,7 @@ class Example(tk.Frame):
         chosen_dishes = [dish_id for dish_id, is_chosen in zip(self.current_order_dish_ids, self.order_ticks) if
                          is_chosen.get()]
 
-        self.restoraunt.order(chosen_dishes)
+        propagate_error_to_ui(self.restoraunt.order)(chosen_dishes)
         if chosen_dishes:
             messagebox.showinfo('заказ сделан!', 'заказ сделан!')
         self.refresh_menu()
