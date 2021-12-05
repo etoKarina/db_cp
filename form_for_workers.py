@@ -14,17 +14,11 @@ class Example(tk.Frame):
         self.button_frame = tk.Frame(self)
         self.button_frame.pack(side=LEFT)
 
-        self.frame = tk.Frame(self)
-        self.frame.pack(side=RIGHT)
+        self.submenu_frame = tk.Frame(self)
+        self.submenu_frame.pack(side=TOP)
 
-        self.button2 = tk.Button(self.button_frame, text='Список ингредиентов')
-        self.button2.pack(side=TOP)
 
-        self.button3 = tk.Button(self.button_frame, text='абоба')
-        self.button3.pack(side=TOP)
-
-        # entry1 = tk.Entry(self)
-        # label1 = tk.Label(self, text='kago')
+        self.pack()
 
     # def on_click(self):
     #     result = entry.get()

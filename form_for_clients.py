@@ -32,11 +32,11 @@ class Example(tk.Frame):
         self.submenu_frame = tk.Frame(self)
         self.submenu_frame.pack(side=TOP)
 
-        self.button_error = tk.Button(self.button_frame, text='Сделать заказ', command=self.make_order_submenu)
-        self.button_error.pack()
+        self.button_order = tk.Button(self.button_frame, text='Сделать заказ', command=self.make_order_submenu)
+        self.button_order.pack()
 
-        self.button_error = tk.Button(self.button_frame, text='Актуальное меню', command=self.actual_menu)
-        self.button_error.pack()
+        self.button_menu = tk.Button(self.button_frame, text='Актуальное меню', command=self.actual_menu)
+        self.button_menu.pack()
 
         self.pack()
 

@@ -2,10 +2,10 @@ from tkinter import Tk, ttk
 import tkinter as tk
 from business_logic import Restoraunt
 
-from tab_a import Example as TabA
-from tab_b import Example as TabB
-from tab_c import Example as TabC
-from tab_d import Example as TabD
+from form_for_clients import Example as TabA
+from form_for_suppliers import Example as TabB
+from form_for_workers import Example as TabC
+from form_for_documents import Example as TabD
 
 
 class MainWindow(tk.Frame):
@@ -25,15 +25,15 @@ class MainWindow(tk.Frame):
 
         self.notebook = ttk.Notebook(self, width=1000, height=700)
 
-        a_tab = TabA(self.notebook, self.restoraunt)
-        b_tab = TabB(self.notebook, self.restoraunt)
-        c_tab = TabC(self.notebook, self.restoraunt)
-        d_tab = TabD(self.notebook, self.restoraunt)
+        tab_for_clients = TabA(self.notebook, self.restoraunt)
+        tab_for_suppliers = TabB(self.notebook, self.restoraunt)
+        tab_for_workers = TabC(self.notebook, self.restoraunt)
+        tab_for_documents = TabD(self.notebook, self.restoraunt)
 
-        self.notebook.add(a_tab, text="Посетителям")
-        self.notebook.add(b_tab, text="Поставщикам")
-        self.notebook.add(c_tab, text="Персоналу")
-        self.notebook.add(d_tab, text="Документация")
+        self.notebook.add(tab_for_clients, text="Посетителям")
+        self.notebook.add(tab_for_suppliers, text="Поставщикам")
+        self.notebook.add(tab_for_workers, text="Персоналу")
+        self.notebook.add(tab_for_documents, text="Документация")
 
         self.notebook.pack()
 
