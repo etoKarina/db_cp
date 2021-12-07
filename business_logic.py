@@ -25,9 +25,9 @@ class Restoraunt:
         product_count = self.db.get_product_count(id)
         dishes_for_product = self.db.get_dishes_for_product(id)
         if not product_count:
-            print(f'Cannot delete product {id} that still present in storage')
+            raise Exception(f'Cannot delete product {id} that still present in storage')
         elif dishes_for_product:
-            print(f'There are dishes {dishes_for_product} that use that product! delete them first')
+            raise Exception(f'There are dishes {dishes_for_product} that use that product! delete them first')
         else:
             self.db.delete_product(id)
 
