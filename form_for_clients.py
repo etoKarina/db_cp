@@ -1,18 +1,6 @@
 import tkinter as tk
-from tkinter import messagebox, RIGHT, LEFT, TOP, IntVar
-
-
-def propagate_error_to_ui(fun):
-    def wrapped(*args, **kwargs):
-
-        try:
-            res = fun(*args, **kwargs)
-            return res
-        except Exception as e:
-            messagebox.showerror('ERROR', e)
-            raise e
-
-    return wrapped
+from tkinter import  RIGHT, LEFT, TOP, IntVar
+from common import propagate_error_to_ui
 
 
 class Example(tk.Frame):

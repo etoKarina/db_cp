@@ -19,11 +19,13 @@ class Restoraunt:
 
     def add_product(self, name, type, price, exp_period):
         max_id = self.db.get_product_max_id()
-        self.db.new_product(max_id + 1, name, type, price, exp_period)
+        self.db.new_product(max_id + 1, name, type, int(price), int(exp_period))
 
     def delete_product(self, id):
         product_count = self.db.get_product_count(id)
         dishes_for_product = self.db.get_dishes_for_product(id)
+
+        # TODO: проверить что такой продукт вообще есть и кидать исключение если его нет
         if not product_count:
             raise Exception(f'Cannot delete product {id} that still present in storage')
         elif dishes_for_product:

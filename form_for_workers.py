@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import Tk, RIGHT, BOTH, RAISED, LEFT, Y, TOP
+from common import propagate_error_to_ui
 
 
 class Example(tk.Frame):
@@ -70,8 +71,7 @@ class Example(tk.Frame):
         self.clear_submenu()
         self.delete_id = tk.StringVar(self)
 
-        self.label_1 = tk.Label(self.submenu_frame, text="Введите id продукта, которое хотиет удалить:")
-        self.label_1.grid(row=0, column=0)
+        tk.Label(self.submenu_frame, text="Введите id продукта, которое хотиет удалить:").grid(row=0, column=0)
 
         self.entry_for_products_name = tk.Entry(self.submenu_frame, textvariable=self.delete_id)
         self.entry_for_products_name.grid(row=0, column=1)
@@ -81,9 +81,10 @@ class Example(tk.Frame):
 
     def send_products(self):
         self.clear_submenu()
-        self.restoraunt.add_product(self.name.get(), self.type.get(), int(self.price.get()), int(self.exp_date.get()))
+        propagate_error_to_ui(self.restoraunt.add_product)(self.name.get(), self.type.get(), self.price.get(), self.exp_date.get())
 
     def delete_product(self):
         self.clear_submenu()
+        # TODO: оберунть в propaget_error_to_ui и убрать приведение к инту в бизнес логику как в add_product
         self.restoraunt.delete_product(int(self.delete_id.get()))
 
