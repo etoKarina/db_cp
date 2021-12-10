@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import  RIGHT, LEFT, TOP, IntVar
+from tkinter import RIGHT, LEFT, TOP, IntVar
 from common import propagate_error_to_ui
 
 

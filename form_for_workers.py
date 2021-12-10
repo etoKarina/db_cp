@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Tk, RIGHT, BOTH, RAISED, LEFT, Y, TOP
+from tkinter import Tk, RIGHT, BOTH, RAISED, LEFT, Y, TOP, IntVar, StringVar
 from common import propagate_error_to_ui
 
 
@@ -9,6 +9,7 @@ class Example(tk.Frame):
 
         self.parent = parent
         self.restoraunt = restoraunt
+        self.order_ticks = []
         self.init_ui()
 
     def init_ui(self):
@@ -67,24 +68,39 @@ class Example(tk.Frame):
         self.clear_button = tk.Button(self.submenu_frame, text='Отмена', command=self.clear_submenu)
         self.clear_button.grid(row=4, column=1)
 
-    def delete_product_submenu(self):
-        self.clear_submenu()
-        self.delete_id = tk.StringVar(self)
-
-        tk.Label(self.submenu_frame, text="Введите id продукта, которое хотиет удалить:").grid(row=0, column=0)
-
-        self.entry_for_products_name = tk.Entry(self.submenu_frame, textvariable=self.delete_id)
-        self.entry_for_products_name.grid(row=0, column=1)
-
-        self.delete_product = tk.Button(self.submenu_frame, text='Ок', command=self.delete_product)
-        self.delete_product.grid(row=1, column=1)
+    # def delete_product_submenu(self):
+    #     self.clear_submenu()
+    #     self.delete_id = tk.StringVar(self)
+    #
+    #     tk.Label(self.submenu_frame, text="Введите id продукта, которое хотиет удалить:").grid(row=0, column=0)
+    #
+    #     self.entry_for_products_name = tk.Entry(self.submenu_frame, textvariable=self.delete_id)
+    #     self.entry_for_products_name.grid(row=0, column=1)
+    #
+    #     self.delete_product = tk.Button(self.submenu_frame, text='Ок', command=self.delete_product)
+    #     self.delete_product.grid(row=1, column=1)
 
     def send_products(self):
         self.clear_submenu()
         propagate_error_to_ui(self.restoraunt.add_product)(self.name.get(), self.type.get(), self.price.get(), self.exp_date.get())
 
-    def delete_product(self):
-        self.clear_submenu()
-        # TODO: оберунть в propaget_error_to_ui и убрать приведение к инту в бизнес логику как в add_product
-        self.restoraunt.delete_product(int(self.delete_id.get()))
+    # def delete_product(self):
+    #     self.clear_submenu()
+    #     # TODO: оберунть в propaget_error_to_ui и убрать приведение к инту в бизнес логику как в add_product
+    #     propagate_error_to_ui(self.restoraunt.delete_product)(self.delete_id.get())
 
+    def delete_product_submenu(self):
+        self.order_ticks = []
+        products = self.restoraunt.get_all_products()
+        height = len(products)
+
+        if height:
+            chosen_product_id = StringVar()
+            chosen_product_id.set('')
+            for i in range(height):  # Rows
+                tk.Label(self.submenu_frame, text=products[i][1]).grid(row=i + 1, column=0)
+                tk.Radiobutton(self.submenu_frame, variable=chosen_product_id, value=products[i][0]).grid(row=i + 1, column=2)
+            # tk.Button(self.submenu_frame, text='Заказать!', command=self.make_order).grid(row=height + 1, column=1)
+        else:
+            self.clear_submenu()
+            tk.Label(self.submenu_frame, text='нечего заказать!').grid(row=height + 1, column=1)

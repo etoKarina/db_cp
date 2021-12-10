@@ -22,8 +22,8 @@ class Restoraunt:
         self.db.new_product(max_id + 1, name, type, int(price), int(exp_period))
 
     def delete_product(self, id):
-        product_count = self.db.get_product_count(id)
-        dishes_for_product = self.db.get_dishes_for_product(id)
+        product_count = self.db.get_product_count(int(id))
+        dishes_for_product = self.db.get_dishes_for_product(int(id))
 
         # TODO: проверить что такой продукт вообще есть и кидать исключение если его нет
         if not product_count:
@@ -31,7 +31,7 @@ class Restoraunt:
         elif dishes_for_product:
             raise Exception(f'There are dishes {dishes_for_product} that use that product! delete them first')
         else:
-            self.db.delete_product(id)
+            self.db.delete_product(int(id))
 
     def remove_stall_products(self, date: datetime.datetime):
         timestamp = calendar.timegm(date.utctimetuple())
@@ -101,6 +101,10 @@ class Restoraunt:
     def get_actual_menu(self):
         all_dishes = self.db.get_all_dish()
         return [dish for dish in all_dishes if self.check_dish(dish[0])]
+
+    def get_all_products(self):
+        all_products = self.db.get_all_products()
+        return all_products
 
     def _throw_error(self):  # нужно только для проверки отлова интерфейсом ошибок
         raise Exception('hahahahaha')
